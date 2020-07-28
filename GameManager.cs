@@ -1,0 +1,67 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+[AddComponentMenu("Game/GameManager")]
+
+public class GameManager : MonoBehaviour
+{
+    // Start is called before the first frame update
+    public static GameManager Instance = null;
+    public int m_score = 0;
+    public static int m_hiscore = 0;
+    public int m_ammo = 100;
+    Player m_player;
+
+    Text txt_ammo;
+    Text txt_hiscore;
+    Text txt_life;
+    Text txt_score;
+    Button button_restart;
+
+
+    void Start()
+    {
+        Instance = this;
+        m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        GameObject uicanvas = GameObject.Find("Canvas");
+        foreach(Transform t in uicanvas.transform.GetComponentsInChildren<Transform>())
+        {
+            if(t.name.CompareTo("txt_ammo")==0)
+            {
+            txt_ammo = t.GetComponent<Text>();
+            }
+            else if(t.name.CompareTo("txt_hiscore")==0)
+            {
+                txt_hiscore = t.GetComponent<Text>();
+
+            }
+            else if(t.name.CompareTo("txt_life")==0)
+            {
+                txt_life = t.GetComponent<Text>();
+
+            }
+            else if(t.name.CompareTo("txt_score")==0)
+            {
+                txt_score = t.GetComponent<Text>();
+
+            }        
+            else if(t.name.CompareTo("Restart Button")==0)
+            {
+                button_restart = t.GetComponent<Button>();
+                button_restart.onClick.AddListener(delegate(){
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            });
+                button_restart.gameObject.SetActive(false);
+
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
